@@ -44,7 +44,7 @@
 
 			//document on change listener
 			carbon.subscribe("active.focus", function(path) {
-				self.active = atheos.editor.getActive();
+				self.active = atheos.inFocusEditor;
 				if (!self.active) return;
 
 				if (path !== self.activePath) {
@@ -57,7 +57,7 @@
 			});
 
 			//Reset Canvas
-			carbon.subscribe("active.close, active.removeAll", function(path) {
+			carbon.subscribe("active.close, active.closeAll", function(path) {
 				self.resetMap();
 			});
 
@@ -76,7 +76,9 @@
 				self.render(self.cache[path]);
 				return;
 			}
-			var code = atheos.editor.getContent();
+			var session = atheos.inFocusSession;
+			if (!session) return;
+			var code = session.getValue();
 			self.worker.postMessage({
 				code
 			});
