@@ -15,7 +15,7 @@
 
 	const self = {
 
-		path: atheos.path + 'plugins/Minimap/',
+		path: atheos.baseUrl + 'plugins/Minimap/',
 		worker: null,
 		template: `<div id="minimap"><div class="overlay"></div><pre><code></code></pre></div>`,
 
@@ -57,7 +57,7 @@
 			});
 
 			//Reset Canvas
-			carbon.subscribe("active.close, active.closeAll", function(path) {
+			carbon.subscribe("active.close active.closeAll", function(path) {
 				self.resetMap();
 			});
 
@@ -76,9 +76,7 @@
 				self.render(self.cache[path]);
 				return;
 			}
-			var session = atheos.inFocusSession;
-			if (!session) return;
-			var code = session.getValue();
+			var code = atheos.inFocusEditor.getSession().getValue();
 			self.worker.postMessage({
 				code
 			});
