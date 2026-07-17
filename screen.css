@@ -50,7 +50,7 @@
 }
 
 .ll-nam {
-	/*color: var(--blue, #0A84FF);*/
+	color: var(--blue, #0A84FF);
 }
 
 .ll-con {
@@ -60,7 +60,6 @@
 .ll-bol,
 .ll-num {
 	color: var(--green, #46A609);
-
 }
 
 .ll-str {
@@ -69,7 +68,6 @@
 
 .ll-rex {
 	color: var(--orange, #F08D24);
-	/*color: #ef6c00*/
 }
 
 .ll-pct {
@@ -77,7 +75,7 @@
 }
 
 .ll-brc {
-	color: var(--silver, #D5D9DD);
+	color: var(--shade1, #D5D9DD);
 }
 
 .ll-key {
@@ -85,5 +83,5 @@
 }
 
 .ll-com {
-	color: var(--fontColorMinor, #757577);
+	color: var(--shade3, #757577);
 }
