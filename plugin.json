@@ -1,11 +1,11 @@
 {
-	"author": ["HLSiira", "Andr3as"],
+	"author": ["HLSiira", "Andr3as", "CheziNut"],
 	"name": "Minimap",
 	"description": "Creates a MiniMap of the current file",
 	"category": "Utility",
 	"status": "available",
 	"url": "https://github.com/HLSiira/Atheos-Minimap",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"config": [{
 		"icon": "fas fa-map",
 		"title": "Minimap"

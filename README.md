@@ -1,4 +1,4 @@
-# Minimap
+# Minimap for [Atheos](https://github.com/Atheos/Atheos/)
 
 This plugin creates a minimap to get a quick overview of code within the [Atheos](http://www.atheos.io) IDE.
 

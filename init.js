@@ -149,13 +149,50 @@
 				}
 			});
 
-			//Click listener
-			oX('#minimap pre', true).on('click', function(e) {
-				if (!self.active) return;
+			var dragging = false;
+			var containerTop = 0;
+
+			var handleDrag = function(e) {
+				if (!self.active || self.length === 0 || self.height === 0) return;
+				var container = self.minimap ? self.minimap.element : null;
+				if (!container) return;
+
 				var y = e.pageY;
-				var offset = self.pre.offset().top;
-				var line = Math.floor((y - offset) / (self.height / self.length));
-				atheos.editor.gotoLine(line);
+				var relativeY = y - containerTop;
+				var mouseContentY = relativeY + container.scrollTop;
+
+				var line = mouseContentY / (self.height / self.length);
+				var firstRow = Math.floor(line - (self.lines / 2));
+				self.active.scrollToRow(firstRow);
+			};
+
+			oX('#minimap').on('mousedown', function(e) {
+				if (e.button !== 0) return; // Only left click
+				var container = self.minimap ? self.minimap.element : null;
+				if (!container) return;
+
+				dragging = true;
+				var rect = container.getBoundingClientRect();
+				containerTop = rect.top + window.pageYOffset;
+
+				handleDrag(e);
+				e.preventDefault();
+			});
+
+			window.addEventListener('mousemove', function(e) {
+				if (dragging) {
+					handleDrag(e);
+				}
+			});
+
+			window.addEventListener('mouseup', function(e) {
+				if (dragging) {
+					dragging = false;
+				}
+			});
+
+			window.addEventListener('blur', function() {
+				dragging = false;
 			});
 		},
 
@@ -239,7 +276,7 @@
 
 			echo({
 				data: {
-					target: 'minimap',
+					target: 'Minimap',
 					action: 'generate'
 				},
 				settled: function(reply, httpStatus) {
@@ -258,7 +295,7 @@
 		loadPresetsFromServer: function() {
 			echo({
 				data: {
-					target: 'minimap',
+					target: 'Minimap',
 					action: 'load'
 				},
 				settled: function(reply, httpStatus) {
