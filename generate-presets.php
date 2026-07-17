@@ -7,15 +7,17 @@
 
 $themeDir = __DIR__ . '/../../components/editor/ace-editor';
 $patterns = [
-    'key' => '/\.ace_keyword[^{]*\{[^}]*color:\s*([^;}]+)/',
-    'str' => '/\.ace_string[^{]*\{[^}]*color:\s*([^;}]+)/',
-    'com' => '/\.ace_comment[^{]*\{[^}]*color:\s*([^;}]+)/',
+    // More specific patterns first to avoid false matches
+    'rex' => '/\.ace_string\.ace_regexp[^{]*\{[^}]*color:\s*([^;}]+)/',
+    'pct' => '/\.ace_keyword\.ace_operator[^{]*\{[^}]*color:\s*([^;}]+)/',
     'num' => '/\.ace_constant\.ace_numeric[^{]*\{[^}]*color:\s*([^;}]+)/',
     'bol' => '/\.ace_constant\.ace_language[^{]*\{[^}]*color:\s*([^;}]+)/',
     'con' => '/\.ace_support\.ace_function[^{]*\{[^}]*color:\s*([^;}]+)/',
-    'rex' => '/\.ace_string\.ace_regexp[^{]*\{[^}]*color:\s*([^;}]+)/',
-    'pct' => '/\.ace_keyword\.ace_operator[^{]*\{[^}]*color:\s*([^;}]+)/',
     'brc' => '/\.ace_entity\.ace_name\.ace_tag[^{]*\{[^}]*color:\s*([^;}]+)/',
+    // Generic patterns after — exclude regex rules from string pattern
+    'key' => '/\.ace_keyword[^{]*\{[^}]*color:\s*([^;}]+)/',
+    'str' => '/\.ace_string(?!\.ace_regexp)[^{]*\{[^}]*color:\s*([^;}]+)/',
+    'com' => '/\.ace_comment[^{]*\{[^}]*color:\s*([^;}]+)/',
 ];
 
 $presets = [];

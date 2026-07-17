@@ -5,5 +5,9 @@
 	"category": "Utility",
 	"status": "available",
 	"url": "https://github.com/HLSiira/Atheos-Minimap",
-	"version": "1.0.4"
+	"version": "1.0.5",
+	"config": [{
+		"icon": "fas fa-map",
+		"title": "Minimap"
+	}]
 }
