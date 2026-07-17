@@ -14,6 +14,7 @@ $patterns = [
     'bol' => '/\.ace_constant\.ace_language[^{]*\{[^}]*color:\s*([^;}]+)/',
     'con' => '/\.ace_support\.ace_function[^{]*\{[^}]*color:\s*([^;}]+)/',
     'brc' => '/\.ace_entity\.ace_name\.ace_tag[^{]*\{[^}]*color:\s*([^;}]+)/',
+    'var' => '/\.ace_variable[^.][^{]*\{[^}]*color:\s*([^;}]+)/',
     // Generic patterns after — exclude regex rules from string pattern
     'key' => '/\.ace_keyword[^{]*\{[^}]*color:\s*([^;}]+)/',
     'str' => '/\.ace_string(?!\.ace_regexp)[^{]*\{[^}]*color:\s*([^;}]+)/',

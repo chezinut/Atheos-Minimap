@@ -53,6 +53,10 @@
 	color: var(--blue, #0A84FF);
 }
 
+.ll-var {
+	color: var(--cyan, #1CC3E8);
+}
+
 .ll-con {
 	color: var(--yellow, #FFD60A);
 }

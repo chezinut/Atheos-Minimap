@@ -55,9 +55,10 @@
 				var tok = m[0];
 
 				if (cls === 'wrd') {
-					if (KEYWORD.test(tok)) cls = 'key';
-					if (BOOLEAN.test(tok)) cls = 'bol';
-					if (CONST.test(tok)) cls = 'con';
+					if (tok.charAt(0) === '$') cls = 'var';
+					else if (KEYWORD.test(tok)) cls = 'key';
+					else if (BOOLEAN.test(tok)) cls = 'bol';
+					else if (CONST.test(tok)) cls = 'con';
 				}
 				if (cls === 'spc') {
 					if (tok.indexOf('\n') >= 0) prefer = false;
