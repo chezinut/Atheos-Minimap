@@ -79,8 +79,8 @@
 			self.worker = new Worker(self.path + 'worker.js');
 			self.worker.addEventListener('message', self.getWorkerResult);
 
-			self.throttleChange = throttle(self.createMap, 5000, self);
-			self.throttleScroll = throttle(self.moveOverlay, 100, self);
+			self.throttleChange = throttle(self.createMap, 500, self);
+			self.throttleScroll = throttle(self.moveOverlay, 1, self);
 
 			// Detect theme changes by watching editor container class mutations
 			var observer = new MutationObserver(function() {
@@ -257,8 +257,7 @@
 					var ratio = maxFirst > 0 ? (first / maxFirst) : 0;
 					ratio = Math.min(Math.max(0, ratio), 1);
 					var maxScrollTop = self.height - containerHeight;
-					var scrollTop = ratio * maxScrollTop;
-					container.scrollTop = scrollTop;
+					container.scrollTop = ratio * maxScrollTop;
 				} else {
 					container.scrollTop = 0;
 				}
