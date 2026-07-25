@@ -150,6 +150,9 @@
 			});
 
 			var dragging = false;
+			var dragMode = 'location'; // 'slider' or 'location'
+			var dragOffsetY = 0;
+			var initialContainerScrollTop = 0;
 			var containerTop = 0;
 
 			var handleDrag = function(e) {
@@ -157,20 +160,30 @@
 				var container = self.minimap ? self.minimap.element : null;
 				if (!container) return;
 
-				var y = e.pageY;
-				var relativeY = y - containerTop;
+				var relativeY = e.clientY - containerTop;
+				var maxFirst = self.length - self.lines;
+				if (maxFirst <= 0) return;
 
 				var firstRow;
-				if (self.height > container.clientHeight && container.clientHeight - self.size > 0) {
+
+				if (dragMode === 'slider') {
 					var H = container.clientHeight;
-					var sliderHeight = self.size;
-					var ratio = (relativeY - sliderHeight / 2) / (H - sliderHeight);
-					ratio = Math.min(Math.max(0, ratio), 1);
-					firstRow = Math.round(ratio * (self.length - self.lines));
+					var trackHeight = Math.min(H, self.height) - self.size;
+					if (trackHeight > 0) {
+						var targetOverlayTop = relativeY - dragOffsetY;
+						var ratio = targetOverlayTop / trackHeight;
+						ratio = Math.min(Math.max(0, ratio), 1);
+						firstRow = Math.round(ratio * maxFirst);
+					} else {
+						firstRow = 0;
+					}
 				} else {
-					var offset = relativeY - self.size / 2;
-					offset = Math.min(Math.max(0, offset), self.height - self.size);
-					firstRow = Math.round(offset / (self.height / self.length));
+					var contentY = relativeY + initialContainerScrollTop;
+					contentY = Math.min(Math.max(0, contentY), self.height);
+					var lineHeight = self.height / self.length;
+					var targetLine = contentY / lineHeight;
+					firstRow = Math.round(targetLine - self.lines / 2);
+					firstRow = Math.min(Math.max(0, firstRow), maxFirst);
 				}
 
 				self.active.scrollToRow(firstRow);
@@ -179,11 +192,27 @@
 			oX('#minimap').on('mousedown', function(e) {
 				if (e.button !== 0) return; // Only left click
 				var container = self.minimap ? self.minimap.element : null;
-				if (!container) return;
+				if (!container || !self.active || self.length === 0 || self.height === 0) return;
 
 				dragging = true;
 				var rect = container.getBoundingClientRect();
-				containerTop = rect.top + window.pageYOffset;
+				containerTop = rect.top;
+
+				var relativeY = e.clientY - containerTop;
+
+				var first = Math.max(0, self.active.renderer.getFirstFullyVisibleRow() - 1);
+				var offset = (self.height / self.length) * first;
+				var overlayTop = offset - container.scrollTop;
+				var isInsideOverlay = (relativeY >= overlayTop && relativeY <= overlayTop + self.size);
+
+				initialContainerScrollTop = container.scrollTop;
+
+				if (isInsideOverlay) {
+					dragMode = 'slider';
+					dragOffsetY = relativeY - overlayTop;
+				} else {
+					dragMode = 'location';
+				}
 
 				handleDrag(e);
 				e.preventDefault();
