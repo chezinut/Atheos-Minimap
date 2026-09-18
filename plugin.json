@@ -5,7 +5,12 @@
 	"category": "Utility",
 	"status": "available",
 	"url": "https://github.com/HLSiira/Atheos-Minimap",
-	"version": "1.0.8",
+	"version": "1.0.9",
+	"rightbar": [{
+		"action": "atheos.MiniMap.toggle();",
+		"icon": "fas fa-map",
+		"title": "Minimap"
+	}],
 	"config": [{
 		"icon": "fas fa-map",
 		"title": "Minimap"

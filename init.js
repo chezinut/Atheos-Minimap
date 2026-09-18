@@ -293,6 +293,18 @@
 			}
 		},
 
+		toggle: function() {
+			if (!self.minimap) return;
+			var shown = self.minimap.element.style.display !== 'none';
+			if (shown) {
+				self.minimap.hide();
+			} else {
+				self.minimap.show();
+			}
+			var btn = document.querySelector('#SBRIGHT a[onclick*="MiniMap.toggle"]');
+			if (btn) btn.classList.toggle('minimap-hidden', shown);
+		},
+
 		resetMap: function() {
 			self.code.empty();
 			self.overlay.css('height', 0);
