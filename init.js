@@ -75,6 +75,13 @@
 			self.code = oX('#minimap code');
 			self.pre = oX('#minimap pre');
 
+			// Restore hidden state across refreshes
+			if (storage('minimap.hidden')) {
+				self.minimap.hide();
+				var btn0 = document.querySelector('#SBRIGHT a[onclick*="MiniMap.toggle"]');
+				if (btn0) btn0.classList.add('minimap-hidden');
+			}
+
 			//Get worker
 			self.worker = new Worker(self.path + 'worker.js');
 			self.worker.addEventListener('message', self.getWorkerResult);
@@ -301,6 +308,7 @@
 			} else {
 				self.minimap.show();
 			}
+			storage('minimap.hidden', shown);
 			var btn = document.querySelector('#SBRIGHT a[onclick*="MiniMap.toggle"]');
 			if (btn) btn.classList.toggle('minimap-hidden', shown);
 		},
